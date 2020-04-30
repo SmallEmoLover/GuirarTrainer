@@ -8,18 +8,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import java.util.Random;
-
 import androidx.annotation.NonNull;
-
 import androidx.fragment.app.Fragment;
-
 import androidx.lifecycle.ViewModelProviders;
-
 import com.emoemoemo.guitartrainer.R;
+import com.emoemoemo.guitartrainer.myUtil;
+
+
 
 public class DashboardFragment extends Fragment {
+
+    private int pxFromDp(int dp) {
+        return dp * (int) getContext().getResources().getDisplayMetrics().density;
+    }
 
     final String notes[][] = {
             {"Ми", "Фа", "Фа-диез", "Соль", "Соль-диез", "Ля", "Ля-диез", "Си", "До", "До-диез", "Ре", "Ре-диез"},
@@ -29,6 +31,8 @@ public class DashboardFragment extends Fragment {
             {"Ля", "Ля-диез", "Си", "До", "До-диез", "Ре", "Ре-диез", "Ми", "Фа", "Фа-диез", "Соль", "Соль-диез"},
             {"Ми", "Фа", "Фа-диез", "Соль", "Соль-диез", "Ля", "Ля-диез", "Си", "До", "До-диез", "Ре", "Ре-диез"}};
 
+    Button[][] neck = new Button[6][12];
+
     final Random rnd = new Random();
 
     int GuessedFret = rnd.nextInt(12);
@@ -37,9 +41,7 @@ public class DashboardFragment extends Fragment {
     TextView stringQuestion, noteQuestion;
     TextView answerText;
 
-    private int pxFromDp(int dp) {
-        return dp * (int)getContext().getResources().getDisplayMetrics().density;
-    }
+
 
     private DashboardViewModel dashboardViewModel;
 
@@ -58,54 +60,26 @@ public class DashboardFragment extends Fragment {
 
         LinearLayout neckView = root.findViewById(R.id.neck_view);
 
-        LinearLayout NumLine = new LinearLayout(getActivity());
-        NumLine.setOrientation(LinearLayout.HORIZONTAL);
-        NumLine.setLayoutParams(new LinearLayout.LayoutParams
-                (ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        for (int i = 0; i < 12; i++)
-        {
-            TextView TextNums = new TextView(getActivity());
-            LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(pxFromDp(50), pxFromDp(40));
-            lParams.setMargins(10, 0, 30, 0);
-            TextNums.setLayoutParams(lParams);
-            TextNums.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            TextNums.setText("" + i);
-            TextNums.setTextSize(17);
-            NumLine.addView(TextNums);
-        }
-        neckView.addView(NumLine);
+        myUtil.ButtonsInit(neck, getActivity(), pxFromDp(1), neckView);
 
         for (int string = 0; string < 6; string++)
         {
-            LinearLayout CurrentLine = new LinearLayout(getActivity());
-            CurrentLine.setOrientation(LinearLayout.HORIZONTAL);
-            CurrentLine.setLayoutParams(new LinearLayout.LayoutParams
-                    (ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            CurrentLine.setBackgroundResource(R.drawable.square);
             for (int fret = 0; fret < 12; fret++)
             {
-                final int CurrentString = string, CurrentFret = fret;
+                final int CurrentFret = fret, CurrentString = string;
 
-                Button clickButton = new Button(getActivity());
-                LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(pxFromDp(50), pxFromDp(50));
-                lParams.setMargins(10, 10, 30, 10);
-                clickButton.setBackgroundResource(R.drawable.circle);
-                clickButton.setLayoutParams(lParams);
-
-
-                clickButton.setOnClickListener(new View.OnClickListener() {
+                neck[string][fret].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        myUtil.ResetColors(neck);
+
                         if (CurrentFret == GuessedFret && notes[CurrentString][0].equals(notes[GuessedString][0]))
-                        {
-                            answerText.setText("Правильно");
-                            answerText.setTextColor(getResources().getColor(R.color.colorRightAnswer));
-                        }
+                            myUtil.RightAnswer(answerText, neck[CurrentString][CurrentFret],
+                                    getResources().getColor(R.color.colorRightAnswer));
                         else
-                        {
-                            answerText.setText("Неправильно");
-                            answerText.setTextColor(getResources().getColor(R.color.colorWrongAnswer));
-                        }
+                            myUtil.WrongAnswer(answerText, neck[GuessedString][GuessedFret],
+                                    notes[CurrentString][CurrentFret], neck[CurrentString][CurrentFret],
+                                    getResources().getColor(R.color.colorWrongAnswer));
 
                         GuessedFret = rnd.nextInt(12);
                         GuessedString = rnd.nextInt(6);
@@ -114,9 +88,7 @@ public class DashboardFragment extends Fragment {
                         return;
                     }
                 });
-                CurrentLine.addView(clickButton);
             }
-            neckView.addView(CurrentLine);
         }
 
         return root;
