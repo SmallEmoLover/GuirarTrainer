@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Guitar Trainer</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_fret_training">Ноты</string>
+    <string name="note_text">Нота:</string>
+    <string name="string_text">Струна:</string>
+</resources>

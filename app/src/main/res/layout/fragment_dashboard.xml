@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fret"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_fone"
+    tools:context=".ui.dashboard.DashboardFragment">
+
+    <HorizontalScrollView
+        android:id="@+id/neck_scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fadeScrollbars="false"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dp"
+        android:overScrollMode="never"
+        android:paddingRight="1dp"
+        android:paddingBottom="15dp"
+        android:requiresFadingEdge="none"
+        android:scrollbarSize="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/neck_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/answer_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:textAlignment="center"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toTopOf="@id/info_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
+
+    <RelativeLayout
+        android:id="@+id/info_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/neck_scroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/answer_text">
+
+        <TextView
+            android:id="@+id/note_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/note_text"
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/string_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/note_text"
+            android:layout_alignStart="@id/note_text"
+            android:layout_centerInParent="true"
+            android:text="@string/string_text"
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/note_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/string_question"
+            android:layout_alignTop="@id/note_text"
+            android:textColor="@color/colorHighlited"
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/string_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/string_text"
+            android:layout_marginStart="45dp"
+            android:layout_toEndOf="@id/string_text"
+            android:textColor="@color/colorHighlited"
+            android:textSize="35sp" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
