@@ -10,46 +10,52 @@
 
     <HorizontalScrollView
         android:id="@+id/neck_scroll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:fadeScrollbars="false"
         android:fadingEdge="none"
         android:fadingEdgeLength="0dp"
+        android:isScrollContainer="false"
         android:overScrollMode="never"
-        android:paddingRight="1dp"
+        android:paddingEnd="1dp"
         android:paddingBottom="15dp"
         android:requiresFadingEdge="none"
         android:scrollbarSize="0dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHeight_percent="0.45"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="RtlSymmetry">
 
         <LinearLayout
             android:id="@+id/neck_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="67" />
 
     </HorizontalScrollView>
 
     <TextView
         android:id="@+id/answer_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         android:textAlignment="center"
-        android:textSize="35sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@id/info_view"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/info_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/neck_scroll"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answer_text">
 
@@ -63,7 +69,8 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:text="@string/note_text"
-            android:textSize="35sp" />
+            android:textSize="30sp"
+            app:autoSizeTextType="uniform" />
 
         <TextView
             android:id="@+id/string_text"
@@ -73,7 +80,8 @@
             android:layout_alignStart="@id/note_text"
             android:layout_centerInParent="true"
             android:text="@string/string_text"
-            android:textSize="35sp" />
+            android:textSize="30sp"
+            app:autoSizeTextType="uniform" />
 
         <TextView
             android:id="@+id/note_question"
@@ -82,7 +90,7 @@
             android:layout_alignStart="@id/string_question"
             android:layout_alignTop="@id/note_text"
             android:textColor="@color/colorHighlited"
-            android:textSize="35sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/string_question"
@@ -92,7 +100,7 @@
             android:layout_marginStart="45dp"
             android:layout_toEndOf="@id/string_text"
             android:textColor="@color/colorHighlited"
-            android:textSize="35sp" />
+            android:textSize="30sp" />
 
     </RelativeLayout>
 

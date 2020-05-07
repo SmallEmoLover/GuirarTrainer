@@ -19,77 +19,39 @@ import com.emoemoemo.guitartrainer.myUtil;
 
 public class DashboardFragment extends Fragment {
 
-    private int pxFromDp(int dp) {
-        return dp * (int) getContext().getResources().getDisplayMetrics().density;
-    }
+    Button[][] GuitarNeck = new Button[6][12];
 
-    final String notes[][] = {
-            {"Ми", "Фа", "Фа-диез", "Соль", "Соль-диез", "Ля", "Ля-диез", "Си", "До", "До-диез", "Ре", "Ре-диез"},
-            {"Си", "До", "До-диез", "Ре", "Ре-диез", "Ми", "Фа", "Фа-диез", "Соль", "Соль-диез", "Ля", "Ля-диез"},
-            {"Соль", "Соль-диез", "Ля", "Ля-диез", "Си", "До", "До-диез", "Ре", "Ре-диез", "Ми", "Фа", "Фа-диез"},
-            {"Ре", "Ре-диез", "Ми", "Фа", "Фа-диез", "Соль", "Соль-диез", "Ля", "Ля-диез", "Си", "До", "До-диез"},
-            {"Ля", "Ля-диез", "Си", "До", "До-диез", "Ре", "Ре-диез", "Ми", "Фа", "Фа-диез", "Соль", "Соль-диез"},
-            {"Ми", "Фа", "Фа-диез", "Соль", "Соль-диез", "Ля", "Ля-диез", "Си", "До", "До-диез", "Ре", "Ре-диез"}};
 
-    Button[][] neck = new Button[6][12];
 
-    final Random rnd = new Random();
 
-    int GuessedFret = rnd.nextInt(12);
-    int GuessedString = rnd.nextInt(6);
 
     TextView stringQuestion, noteQuestion;
     TextView answerText;
 
 
-
-    private DashboardViewModel dashboardViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
+        DashboardViewModel dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         stringQuestion = root.findViewById(R.id.string_question);
         noteQuestion = root.findViewById(R.id.note_question);
-        stringQuestion.setText(notes[GuessedString][0]);
-        noteQuestion.setText(notes[GuessedString][GuessedFret]);
         answerText = root.findViewById(R.id.answer_text);
 
         LinearLayout neckView = root.findViewById(R.id.neck_view);
 
-        myUtil.ButtonsInit(neck, getActivity(), pxFromDp(1), neckView);
+        myUtil.NextQuestion(noteQuestion, stringQuestion);
 
-        for (int string = 0; string < 6; string++)
+        for (int i = 0; i < 6; i++)
         {
-            for (int fret = 0; fret < 12; fret++)
-            {
-                final int CurrentFret = fret, CurrentString = string;
-
-                neck[string][fret].setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        myUtil.ResetColors(neck);
-
-                        if (CurrentFret == GuessedFret && notes[CurrentString][0].equals(notes[GuessedString][0]))
-                            myUtil.RightAnswer(answerText, neck[CurrentString][CurrentFret],
-                                    getResources().getColor(R.color.colorRightAnswer));
-                        else
-                            myUtil.WrongAnswer(answerText, neck[GuessedString][GuessedFret],
-                                    notes[CurrentString][CurrentFret], neck[CurrentString][CurrentFret],
-                                    getResources().getColor(R.color.colorWrongAnswer));
-
-                        GuessedFret = rnd.nextInt(12);
-                        GuessedString = rnd.nextInt(6);
-                        stringQuestion.setText(notes[GuessedString][0]);
-                        noteQuestion.setText(notes[GuessedString][GuessedFret]);
-                        return;
-                    }
-                });
-            }
+            for (int j = 0; j < 12; j++)
+                GuitarNeck[i][j] = new Button(getActivity());
         }
+
+        myUtil.ButtonsInit(GuitarNeck, getActivity(), neckView);
+
+        myUtil.SetModeOne(GuitarNeck, answerText, stringQuestion, noteQuestion, getContext());
 
         return root;
     }
